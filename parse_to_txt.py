@@ -1,12 +1,6 @@
 import requests
 import re
-import os
 import json
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4,portrait
-from PIL import Image
-from selenium import webdriver
-import time
 
 def getHTMLText(url):
     try:
@@ -34,14 +28,13 @@ def parse_txt(wenku_id):
 def main():
     url=input('请输入你要获取百度文库的URL连接：')
     html=getHTMLText(url)
-    wenku_title=re.findall("\'title\'.*?\'(.*?)\'",html)[0]
-    wenku_type=re.findall("\'docType\'.*?\'(.*?)\'",html)[0]
-    wenku_id=re.findall("'docId'.*?'(.*?)'",html)[0]
+    wenku_title = re.findall("\"title\".*?\"(.*?)\"", html)[0]
+    wenku_id = re.findall("\"docId\".*?\"(.*?)\"", html)[0]
     result=parse_txt(wenku_id)  
-    filename=wenku_title+'.txt'
+    filename=wenku_title+'.doc'
     with open(filename,'w',encoding='utf-8')as f:
         f.write(result)
-    print('文件保存为{}.txt'.format(wenku_title))
+    print('文件保存为{}.doc'.format(wenku_title))
 
 main()
 
