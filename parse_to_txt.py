@@ -26,15 +26,15 @@ def parse_txt(wenku_id):
     return result
 
 def main():
-    url=input('请输入你要获取百度文库的URL连接：')
+    url="https://wenku.baidu.com/view/f308675c862458fb770bf78a6529647d272834be.html"
     html=getHTMLText(url)
     wenku_title = re.findall("\"title\".*?\"(.*?)\"", html)[0]
     wenku_id = re.findall("\"docId\".*?\"(.*?)\"", html)[0]
     result=parse_txt(wenku_id)  
-    filename=wenku_title+'.doc'
+    filename=wenku_title+'.txt'
     with open(filename,'w',encoding='utf-8')as f:
         f.write(result)
-    print('文件保存为{}.doc'.format(wenku_title))
+    print('文件保存为{}.txt'.format(wenku_title))
 
 main()
 

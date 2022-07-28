@@ -12,10 +12,11 @@ def getHTMLText(url):
 
 def parse_doc(html): #这一块是重点
     result = ''
-    url_list = re.findall('(https.*?0.json.*?)\\\\x22}', html)
+    url_list = re.findall('(https[^,;]+?0.json.*?)\"}', html)
+    print(len(url_list))
     url_list = [addr.replace("\\\\\\/", "/") for addr in url_list]
     print(url_list)
-    for url in url_list[:-5]:
+    for url in url_list:
         content = getHTMLText(url)
         y = 0
         txtlists = re.findall('"c":"(.*?)".*?"y":(.*?),', content)
@@ -30,7 +31,8 @@ def parse_doc(html): #这一块是重点
     return result
 
 def main():
-    url=input('请输入你要获取百度文库的URL连接：')
+    # url=input('请输入你要获取百度文库的URL连接：')
+    url="https://wenku.baidu.com/view/f308675c862458fb770bf78a6529647d272834be.html"
     html=getHTMLText(url)
     wenku_title=re.findall("\"title\".*?\"(.*?)\"",html)[0]
     wenku_id=re.findall("\"docId\".*?\"(.*?)\"",html)[0]
